@@ -41,5 +41,22 @@ function toggleStatus(){
         body: JSON.stringify(tempDog)
     })
 }
-   
 
+
+window.addEventListener('DOMContentLoaded', ()=> document.querySelector('#good-dog-filter').addEventListener('click', ()=> updateArray())) 
+
+function updateArray(){
+    doggosArray = [];
+    fetch('http://localhost:3000/pups')
+    .then(res => res.json())
+    .then(data => data.forEach(ele => doggosArray.push(ele)))
+    .then(()=> filterDogs())
+}
+
+function filterDogs(){
+//    dogsArray = doggosArray.filter(dog => dog.isGoodDog == true)
+
+   let filterBtn = document.querySelector('#good-dog-filter');
+ 
+    filterBtn.innerHTML == 'Filter good dogs: OFF'? filterBtn.innerHTML = 'Filter good dogs: ON':filterBtn.innerHTML = 'Filter good dogs: OFF'
+}
