@@ -1,14 +1,17 @@
 let doggosArray = [];
 
+
 fetch('http://localhost:3000/pups')
 .then(res => res.json())
 .then(data => data.forEach(ele => doggosArray.push(ele)))
 
-setTimeout(()=> renderNames() ,1000)
 
-function renderNames(){
+setTimeout(()=> renderNames(doggosArray) ,1000)
+
+function renderNames(array){
     const dogBar = document.querySelector('#dog-bar');
-    doggosArray.forEach( element => {
+    dogBar.innerHTML='';
+    array.forEach( element => {
     let doggoSpan = document.createElement('span');
     doggoSpan.innerHTML = element.name;
     doggoSpan.addEventListener('click', () => displayDogInfo(element))
@@ -54,9 +57,20 @@ function updateArray(){
 }
 
 function filterDogs(){
-//    dogsArray = doggosArray.filter(dog => dog.isGoodDog == true)
+   let tempDoggosArray = doggosArray.filter(dog => dog.isGoodDog == true)
+   
+   renderNames(doggosArray);
 
    let filterBtn = document.querySelector('#good-dog-filter');
  
-    filterBtn.innerHTML == 'Filter good dogs: OFF'? filterBtn.innerHTML = 'Filter good dogs: ON':filterBtn.innerHTML = 'Filter good dogs: OFF'
+    if (filterBtn.innerHTML == 'Filter good dogs: OFF'){
+        filterBtn.innerHTML = 'Filter good dogs: ON';
+        renderNames(tempDoggosArray);
+    }
+    else if (filterBtn.innerHTML == 'Filter good dogs: ON'){
+        filterBtn.innerHTML = 'Filter good dogs: OFF';
+        renderNames(doggosArray)
+    }
+
+    
 }
